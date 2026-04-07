@@ -18,6 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bloc.Bloc.observer = SimpleBlocObserver();
   configureDependencies(Environment.dev);
+  // HiveDatabase uses flutter_secure_storage (hardware-backed) internally;
+  // no prerequisite init needed before it.
   await HiveDatabase.init();
   await GetStorage.init();
   getIt<AppConfiguration>().init();

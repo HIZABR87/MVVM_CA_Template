@@ -1,28 +1,23 @@
 import 'package:injectable/injectable.dart';
+import 'package:mvvm_architecture_template/core/storage/token_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 @lazySingleton
 class AppConfiguration {
-  late bool _isAuthorized;
+  final ITokenService _tokenService;
   late String _appVersion;
 
+  AppConfiguration(this._tokenService);
+
   void init() async {
-    initAuthorized();
-    _appVersion = await getAppVersion();
+    _appVersion = await _getAppVersion();
   }
 
-  void initAuthorized() async {
-    // _isAuthorized = getIt<GetAuthHive>().getAuthorized();
-    _isAuthorized = false;
-  }
-
-  bool get isAuthorized => _isAuthorized;
+  bool get isAuthorized => _tokenService.isAuthenticated;
   String get appVersion => _appVersion;
 
-  Future<String> getAppVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    String version = packageInfo.version;
-    return version;
+  Future<String> _getAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
   }
 }

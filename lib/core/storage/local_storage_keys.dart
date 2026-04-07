@@ -1,5 +1,5 @@
 class LocalStorageKeys {
-  static const String token = 'Token';
-  static const String refreshToken = 'Refresh token';
+  // Token lifecycle is managed exclusively by ITokenService (encrypted Hive box).
+  // Only non-sensitive preferences belong here.
   static const String languageCode = 'languageCode';
 }
